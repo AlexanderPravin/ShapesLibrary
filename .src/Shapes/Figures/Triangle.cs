@@ -17,7 +17,9 @@ public class Triangle : IShape
         if (sideA < 0 || sideB < 0 || sideC < 0)
             throw new ArgumentException("Sides must be greater than 0");
         
-        var isCorrect = sideA + sideB > sideC && sideA + sideC > sideB && sideB + sideC > sideA;
+        var isCorrect = sideA + sideB > sideC && 
+                        sideA + sideC > sideB && 
+                        sideB + sideC > sideA;
         
         if(!isCorrect)
             throw new ArgumentException("Triangle with such sides does not exist");
@@ -37,11 +39,9 @@ public class Triangle : IShape
 
     public bool IsRight()
     {
-        if (SideA > SideB && SideA > SideC)
-            return Math.Abs(Math.Pow(SideA, 2) - (Math.Pow(SideB, 2) + Math.Pow(SideC, 2))) < Tolerance;
-        if (SideB > SideA && SideB > SideC)
-            return Math.Abs(Math.Pow(SideB, 2) - (Math.Pow(SideA, 2) + Math.Pow(SideC, 2))) < Tolerance;
-        
-        return Math.Abs(Math.Pow(SideC, 2) - (Math.Pow(SideB, 2) + Math.Pow(SideA, 2))) < Tolerance;
+        double[] sides = [SideA, SideB, SideC];
+        Array.Sort(sides);
+
+        return Math.Abs(Math.Pow(sides[2], 2) - (Math.Pow(sides[1], 2) + Math.Pow(sides[0], 2))) < Tolerance;
     }
 }
